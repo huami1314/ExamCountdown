@@ -453,7 +453,8 @@ h1 {
   padding: 6px 0 0;
 }
 
-.footer .github {
+.footer .github,
+.footer .vercel {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -462,7 +463,12 @@ h1 {
   transition: color 0.2s ease, transform 0.2s ease;
 }
 
-.footer .github:hover {
+.footer .github:hover,
+.footer .vercel:hover {
   color: var(--fg);
   transform: translateY(-1px);
+}
+
+.footer-sep {
+  color: var(--muted);
 }
