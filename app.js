@@ -30,6 +30,9 @@ const exams = [
 const container = document.getElementById("examContainer");
 const pager = document.getElementById("pager");
 const headerCountdown = document.getElementById("headerCountdown");
+const calendarBadge = document.getElementById("calendarBadge");
+const calendarMonth = document.getElementById("calendarMonth");
+const calendarDay = document.getElementById("calendarDay");
 const mobileQuery = window.matchMedia("(max-width: 640px)");
 let currentIndex = 0;
 let lastIndex = 0;
@@ -38,6 +41,11 @@ let panelObserver = null;
 const formatDate = (iso) => {
   const [y, m, d] = iso.split("-");
   return `${y}/${m}/${d}`;
+};
+
+const formatWeekday = (iso) => {
+  const date = new Date(`${iso}T00:00:00`);
+  return date.toLocaleDateString("en-US", { weekday: "short" });
 };
 
 const getDiffDays = (isoDate) => {
@@ -93,6 +101,14 @@ const updateHeaderCountdown = () => {
   headerCountdown.textContent = `Next in ${parts.days}d ${parts.hours}h ${parts.minutes}m ${parts.seconds}s`;
 };
 
+const updateCalendarBadge = () => {
+  if (!calendarMonth || !calendarDay) return;
+  const now = new Date();
+  calendarMonth.textContent = now.toLocaleDateString("en-US", { month: "short" }).toUpperCase();
+  calendarDay.textContent = String(now.getDate()).padStart(2, "0");
+};
+
+
 const getNext = (subjects) => {
   const diffs = subjects
     .map((subject) => getDiffDays(subject.date))
@@ -114,8 +130,7 @@ const renderPanels = () => {
 
     panel.innerHTML = `
       <div class="panel-title">
-        <h2>${exam.name}</h2>
-        <span>${exam.range}</span>
+        <h2>${exam.name}<span class="range">${exam.range}</span></h2>
       </div>
       <div class="lead">
         <div class="lead-number">${leadText}</div>
@@ -143,7 +158,7 @@ const renderPanels = () => {
       card.style.animationDelay = `${0.1 + subjectIndex * 0.06 + index * 0.1}s`;
       card.innerHTML = `
         <h3><span class="label">${subject.name}</span></h3>
-        <div class="date">${formatDate(subject.date)}</div>
+        <div class="date">${formatDate(subject.date)} ${formatWeekday(subject.date)}</div>
         <div class="count">${text}</div>
         <div class="state">${state}</div>
       `;
@@ -342,7 +357,9 @@ setupPager();
 handleResponsive();
 mobileQuery.addEventListener("change", handleResponsive);
 bindPressEffects();
+updateCalendarBadge();
 setInterval(updateCountdowns, 1000);
+setInterval(updateCalendarBadge, 60000);
 
 window.addEventListener("load", () => {
   showPanel(currentIndex);

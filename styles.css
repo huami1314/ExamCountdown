@@ -71,6 +71,50 @@ header {
   gap: 16px;
 }
 
+.header-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.calendar-badge {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  display: grid;
+  grid-template-rows: 1fr 2fr;
+  align-items: center;
+  justify-items: center;
+  overflow: hidden;
+  box-shadow: 0 8px 16px var(--shadow);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.calendar-month {
+  width: 100%;
+  text-align: center;
+  font-size: 0.5rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  background: #111111;
+  padding: 2px 0 1px;
+}
+
+[data-theme="dark"] .calendar-month {
+  background: #f1f1f1;
+  color: #101010;
+}
+
+.calendar-day {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--fg);
+  line-height: 1;
+}
+
 .title {
   display: flex;
   flex-direction: column;
@@ -202,7 +246,7 @@ h1 {
 
 .panel-title {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
   gap: 12px;
 }
@@ -212,11 +256,16 @@ h1 {
   font-size: 1.6rem;
   letter-spacing: 0.08em;
   line-height: 1.1;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-.panel-title span {
-  font-size: 0.9rem;
+.panel-title .range {
+  font-size: 0.8rem;
   color: var(--muted);
+  letter-spacing: 0.02em;
 }
 
 .lead {
